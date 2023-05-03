@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Create a New Student Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            background: rgb(201, 209, 213);
+        }
+
+        form{
+            margin: auto;
+            width:20%;
+            color: #f2f2f2;
+            padding-top: 10px;
+        }
+
+
+        header {
+            background: #82949BFF;
+            padding: 20px;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+            background: #315165;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        a {
+            color: #c9d1d5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+<header>
+    <h1>Student Enrollment - Create a New Student </h1>
+</header>
+<!--<section>-->
+<form th:method="POST" th:action="@{/CreateStudent}">
+    <label for='username'>Username:</label><input id='username' type='text' name='username'/><br/>
+    <label for='password'>Password:</label><input style="margin-left: 4px" id='password' type='password' name='password'/><br/>
+    <label for='name'>Name:</label><input style="margin-left: 31px" id='name' type='text' name='name'/><br/>
+    <label for='surname'>Surname:</label><input style="margin-left: 9px" id='surname' type='text' name='surname'/><br/>
+    <input style="background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;" type='submit' value='Submit'/>
+</form>
+<!--</section>-->
+</body>
+</html>

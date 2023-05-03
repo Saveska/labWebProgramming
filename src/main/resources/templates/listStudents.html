@@ -1,0 +1,121 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Add new Student to Course</title>
+
+    <style type = "text/css">
+        /*body {*/
+        /*    width: 800px;*/
+        /*    margin: auto;*/
+        /*}*/
+        table {
+            width:100%;
+        }
+        table, td, th {
+            border: 1px solid black;
+            padding:3px 2px;
+        }
+        section {
+            float: left;
+            margin: 0 1.5%;
+            width: 63%;
+        }
+        aside {
+            float: right;
+            margin: 0 1.5%;
+            width: 30%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            background: rgb(201, 209, 213);
+        }
+
+
+        header {
+            background: #82949BFF;
+            padding: 20px;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+            background: #315165;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        a {
+            color: #c9d1d5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0052a3;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <h1>Student Enrollment - Select the Student </h1>
+</header>
+<section>
+    <h2>Select the student to enroll:</h2>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <a href='/CreateStudent' type='button'>Create New Student</a> <br/> <br/>
+    </th:block>
+    <a href='/newStudentList' type="button">New Students List</a>
+    <!--    <input type="radio" name="size" value="petar.petrov"> Петар Петров <br/>-->
+    <!--    <input type="radio" name="size" value="mile.milev"> Миле Милев <br/>-->
+    <!--    <input type="radio" name="size" value="gjorgji.gjorgjiev"> Ѓорѓи Ѓорѓиев <br/>-->
+    <!--    <br/>-->
+    <form th:action="@{/StudentEnrollmentSummary}" method="POST">
+        <th:block th:each="student : ${students}">
+            <input type="radio" name="username" th:value="${student.getUsername()}">
+            <span th:text="${student.getName() + ' ' + student.getSurname()}"></span>
+            <br/>
+        </th:block>
+
+        <!--    <a href="/StudentEnrollmentSummary">Submit</a>-->
+        <button type="submit">Submit</button>
+    </form>
+</section>
+<aside>
+    <table>
+        <tr>
+            <th colspan="2">
+                Your Enrollment Status
+            </th>
+        </tr>
+        <tr>
+            <td><b>Course Id</b></td>
+            <td><th:block th:utext="${#session.getAttribute('courseId')}"></th:block></td>
+
+        </tr>
+    </table>
+</aside>
+
+</body>
+</html>

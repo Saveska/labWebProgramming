@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WP lab - Students in Course</title>
+    <link rel="stylesheet" type="text/css" href="../static/style.css">
+
+    <style type = "text/css">
+        /*body {*/
+        /*    width: 800px;*/
+        /*    margin: auto;*/
+        /*}*/
+        table {
+            width:100%;
+        }
+        table, td, th {
+            border: 1px solid black;
+            padding:3px 2px;
+        }
+        section {
+            /*float: left;*/
+            /*margin: 0 1.5%;*/
+            width: 63%;
+            margin: auto;
+        }
+        aside {
+            float: right;
+            margin: 0 1.5%;
+            width: 30%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            background: rgb(201, 209, 213);
+        }
+        .container{
+            text-align: center;
+        }
+
+
+        header {
+            /*background: #82949BFF;*/
+            /*padding: 20px;*/
+            /*text-align: center;*/
+            color: #000000;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+            background: #315165;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        a {
+            color: #000000;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0052a3;
+        }
+        ul{
+            /*display: inline-block;*/
+            list-style-type: none;
+            background: #a6adb2;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<div class="container">
+
+    <section>
+        <div>
+            Currently selected student: <span th:text="${session.currentStudent}"></span>
+        </div>
+
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+            <div>
+                Add a grade:
+            </div>
+            <form th:action="@{/courses/add-grade}" method="POST">
+                <input type="text" name="selectedStudent" hidden th:value="${session.currentStudent}">
+                <input type="text" name="selectedCourse" hidden th:value="${session.courseId}">
+                <select name="selectedGrade">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                </select>
+                <br>
+                <input type="datetime-local" name="dateGrade">
+                <br>
+                <button type="submit">Submit Grade!</button>
+
+            </form>
+        </th:block>
+        <a href="/courses">Back</a>
+    </section>
+    <br>
+    <header>
+        <h1>Students in Course </h1>
+    </header>
+
+    <ul th:each="student : ${students}">
+        <li th:text="${student.getName() + ' ' + student.getSurname() + ' (' + student.getUsername() + ')' }">Петар Петров (petar.petrov)</li>
+        <th:block th:each="grade : ${grades}">
+            <div th:text="${student.getUsername().equals(grade.getStudent().getUsername())}? ${grade.getGrade() + ' ' + #temporals.format(grade.getTimestamp(),'dd-MM-yyyy HH:mm:ss')} : ''"></div>
+        </th:block>
+
+    </ul>
+
+    <br>
+    <br>
+
+</div>
+</body>
+</html>

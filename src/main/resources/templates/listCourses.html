@@ -1,0 +1,111 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Welcome and Choose a Course</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            background: rgb(29, 34, 38);
+        }
+
+
+        header {
+            background: rgb(29, 34, 38);
+            padding: 20px;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+            background: #315165;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        a {
+            color: #bfcece;
+            text-decoration: none;
+            border: solid #f2f2f2;
+            border-radius: 10px;
+            padding: 2px 3px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0052a3;
+        }
+
+        .highlight_teacher{
+            color:red;
+        }
+    </style>
+
+</head>
+<body>
+<header>
+    <h1>Courses List</h1>
+</header>
+<main>
+
+    <a th:if="${#request.getRemoteUser() == null}" href="/login" > Login</a>
+
+    <form th:action="@{/courses}" method="GET">
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+            <a class="addButton" href="/courses/add-form">Add new course</a><br> <br>
+        </th:block>
+        <a href='/courses/grades' type="button">Grades</a> <br> <br>
+        <select name='teacherId' id="teacher" required >
+            <option th:each="teacher : ${teachers}" th:value="${teacher.getId()}" th:text="${teacher.getName() + ' ' + teacher.getSurname()}" th:selected="${selectedTeacher != null && teacher.getId().equals(selectedTeacher)}"></option>
+        </select><br>
+        <button type="submit" >Submit</button>
+    </form>
+
+    <div th:if="${error != null}">
+        <span th:text="${error}"></span>
+    </div>
+
+    <h2>Choose course:</h2>
+    <form th:action="@{/courses}" method="POST">
+        <th:div th:each="course : ${courses}" th:classappend="${course.getTeacher().getId().equals(selectedTeacher)} ? 'highlight_teacher'">
+            <input type="radio" name="courseId" required th:value="${course.getCourseId()}">
+            <span class="course" th:text="${course.getName()}"></span>
+            <br>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="editButton" th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"  >Edit</a>
+                <br>
+                <a class="deleteButton" th:href="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"  >Delete</a>
+                <br>
+            </th:block>
+
+        </th:div>
+        <!--    <a href="/AddStudent"><button type="submit" >Submit</button></a>-->
+        <button type="submit" >Submit</button>
+    </form>
+
+    <th:block th:if="${#request.getRemoteUser() != null}">
+        <a href="/logout" > Logout</a>
+    </th:block>
+</main>
+</body>
+</html>

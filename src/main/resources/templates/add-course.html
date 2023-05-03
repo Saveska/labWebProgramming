@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Create a New Student Page</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            background: rgb(29, 34, 38);
+        }
+
+        section{
+            margin: auto;
+            width:40%;
+            color: #f2f2f2;
+        }
+
+
+        header {
+            background: rgb(29, 34, 38);
+            padding: 20px;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+            background: #315165;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        a {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            /*padding: 10px 20px;*/
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            /*margin: 0 auto;*/
+            text-align: center;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: #0052a3;
+        }
+
+    </style>
+
+</head>
+<body>
+<header>
+    <h1>Create a new class </h1>
+</header>
+<section>
+    <th:block th:if="${error != null}">
+        <th:div th:utext="${error}"></th:div>
+    </th:block>
+
+    <form  th:action="@{/courses/add-form}" method="POST">
+        <input id="courseId" type="hidden" name="courseId" th:value="(${course} != null ? ${course.getCourseId()} : '')">
+
+
+        <label for='name'>Name:</label><input required id='name' type='text' name='name' th:value="(${course} != null ? ${course.getName()} : '')"/><br/>
+        <label for='description'>Description:</label><input required id='description' type='text' name='description'  th:value="(${course} != null ? ${course.getDescription()} : '')" style="width:500px;"/><br/>
+        <label for='teacher'>Select teacher:</label>
+        <select name='teacherId' id="teacher" required >
+            <option th:each="teacher : ${teachers}" th:value="${teacher.getId()}" th:text="${teacher.getName() + ' ' + teacher.getSurname()}" th:selected="${course != null && course.getTeacher().getId() == teacher.getId()}"></option>
+        </select><br>
+
+        <button type="submit">Submit</button>
+        <br><br>
+        <a href="/courses">Go Back</a>
+    </form>
+
+
+
+</section>
+</body>
+</html>

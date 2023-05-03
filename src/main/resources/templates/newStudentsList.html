@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>WP lab - Students in Course</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            background: rgb(29, 34, 38);
+        }
+
+
+        header {
+            background: rgb(29, 34, 38);
+            padding: 20px;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+            background: #315165;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        a {
+            color: #c9d1d5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0052a3;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<header>
+    <h1>Students in Course </h1>
+</header>
+<section>
+    <div>
+        <ul>
+            <th:block th:each="student : ${students}">
+
+                <li th:utext="${student.getUsername() + ' ' + student.getName() + ' ' + student.getSurname()}"></li>
+            </th:block>
+
+        </ul>
+    </div>
+
+</section>
+
+</body>
+</html>

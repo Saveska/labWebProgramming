@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            background: rgb(29, 34, 38);
+        }
+
+        section{
+            margin: auto;
+            width:20%;
+            color: #f2f2f2;
+        }
+
+
+        header {
+            background: rgb(29, 34, 38);
+            padding: 20px;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1em;
+            background: #315165;
+            text-align: center;
+            color: #f2f2f2;
+        }
+
+        a {
+            color: #c9d1d5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        button {
+            background-color: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        button:hover {
+            background-color: #0052a3;
+        }
+
+    </style>
+
+</head>
+<body>
+<header>
+    <h1>Enter your username and password!</h1>
+</header>
+<section>
+
+
+    <form th:action="@{/login}" method="POST">
+
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" required="" autofocus="">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required="">
+        </p>
+
+        <div th:text="${param.error}"></div>
+
+        <button id="submit" type="submit">Sign in</button>
+    </form>
+
+
+</section>
+</body>
+</html>
