@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,8 +16,9 @@ public class Grade {
     private Character grade;
     @ManyToOne
     private Student student;
-    @OneToOne
+    @ManyToOne
     private Course course;
+
     private LocalDateTime timestamp;
 
     public Grade() {

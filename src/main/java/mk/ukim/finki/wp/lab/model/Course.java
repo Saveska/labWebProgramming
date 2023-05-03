@@ -24,6 +24,9 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    @OneToMany(mappedBy = "course",cascade = CascadeType.REMOVE)
+    private List<Grade> grades;
+
     public Course() {
     }
 
